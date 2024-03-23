@@ -238,6 +238,14 @@ function FormPage() {
                 >
                   <Input type="text" />
                 </FormItem>
+                <Button
+                  onClick={async () => {
+                    const a = await form3.isValid();
+                    console.log(a);
+                  }}
+                >
+                  dasd
+                </Button>
               </Form>
               <Divider align="left">
                 <Text type="primary">动态校验</Text>
@@ -646,7 +654,6 @@ function FormPage() {
                         <Button
                           onClick={() => {
                             form.color = '';
-                            console.log(form.getFormData());
                           }}
                         >
                           改变
@@ -686,7 +693,7 @@ function FormPage() {
                   </Button>
 
                   <Button
-                    onClick={() => {
+                    onClick={async () => {
                       form.isValid();
                     }}
                   >

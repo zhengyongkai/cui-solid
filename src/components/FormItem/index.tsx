@@ -61,7 +61,6 @@ export function FormItem(props: FormItemProps) {
     // isRequired = rules.required;
     if (Array.isArray(rules)) {
       for (let rule of rules) {
-        console.log(rule);
         if (rule.required) {
           isRequired = true;
         }
@@ -73,7 +72,6 @@ export function FormItem(props: FormItemProps) {
   if (props.rules) {
     if (Array.isArray(props.rules)) {
       for (let rule of props.rules) {
-        console.log(rule);
         if (rule.required) {
           isRequired = true;
         }
@@ -107,14 +105,20 @@ export function FormItem(props: FormItemProps) {
         name: rules,
       });
       if (Array.isArray(rules)) {
-        validator.validate({ name: v }, { firstFields: true }, (errors) => {
-          if (errors) {
-            setError(errors![0].message);
-            return;
-          } else {
-            setError(null);
-          }
-        });
+        const a = await validator
+          .validate({ name: v }, { firstFields: true }, (errors) => {
+            if (errors) {
+              setError(errors![0].message);
+              return errors;
+              // return;
+            } else {
+              setError(null);
+            }
+          })
+          .catch(({ errors, fields }) => {
+            return Promise.resolve(errors);
+          });
+        return !Array.isArray(a);
       } else {
         const msgs = ctx.form.getMessage(name) || props.messages;
         if (rules.required) {
@@ -145,7 +149,6 @@ export function FormItem(props: FormItemProps) {
         }
         setError(null);
       }
-
       return true;
     }
     return true;

@@ -1,11 +1,7 @@
 {
-  "name": "cui-solid",
-  "version": "0.1.36",
+  "name": "cui-solid-better",
+  "version": "0.1.4",
   "description": "An UI component library and front-end solution based on solidjs",
-  "type": "module",
-  "author": "cqb325",
-  "homepage": "https://cqb325.gitee.io/cui-solid-doc",
-  "main": "dist/cui.min.esm.js",
   "keywords": [
     "cui-solid",
     "solid-js",
@@ -14,26 +10,37 @@
     "library",
     "component"
   ],
+  "homepage": "https://cqb325.gitee.io/cui-solid-doc",
   "repository": {
     "type": "git",
     "url": "https://gitee.com/cqb325/cui-solid"
   },
+  "license": "MIT",
+  "author": "cqb325",
+  "type": "module",
+  "main": "dist/cui.min.esm.js",
+  "typings": "types/index.d.ts",
   "files": [
     "dist",
     "src",
     "types"
   ],
-  "typings": "types/index.d.ts",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
     "build": "npm run build:lib && npm run build:style",
+    "build:doc": "vite build --config build/vite.doc.config.ts",
     "build:lib": "vite build",
-    "build:types": "tsc",
     "build:style": "gulp --gulpfile build/build.style.ts",
-    "build:doc": "vite build --config build/vite.doc.config.ts"
+    "build:types": "tsc",
+    "dev": "vite",
+    "start": "vite"
   },
-  "license": "MIT",
+  "dependencies": {
+    "async-validator": "^4.2.5",
+    "countup.js": "^2.6.2",
+    "cui-virtual-list": "^1.0.7",
+    "dayjs": "^1.11.7",
+    "tinycolor2": "^1.6.0"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.5",
     "@types/tinycolor2": "^1.4.3",
@@ -52,12 +59,5 @@
     "vite": "^4.3.9",
     "vite-plugin-solid": "^2.7.0",
     "vitest": "0.25.1"
-  },
-  "dependencies": {
-    "async-validator": "^4.2.5",
-    "countup.js": "^2.6.2",
-    "cui-virtual-list": "^1.0.7",
-    "dayjs": "^1.11.7",
-    "tinycolor2": "^1.6.0"
   }
 }
