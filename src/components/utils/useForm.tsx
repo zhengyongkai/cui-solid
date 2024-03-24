@@ -1,6 +1,6 @@
 import { Accessor, createSignal } from 'solid-js';
 
-export interface useFormProps {
+export type useFormProps = {
   isValid(): boolean;
   getFormData(): any;
   setFormData(mData: any, check?: boolean): void;
@@ -11,15 +11,15 @@ export interface useFormProps {
   setClearValid(name: string, clearFn: Function): void;
   clearValidates(name?: string): void;
   [key: string]: any;
-}
+};
 
-export interface useFormParams<T> {
+export interface useFormParams<T extends Object> {
   data: T;
   validation?: any;
   message?: any;
 }
 
-function useForm<T>({
+function useForm<T extends Object>({
   data: current,
   validation = {},
   message = {},
@@ -42,7 +42,6 @@ function useForm<T>({
 
       if (!(await check(newData[name]))) {
         valid = false;
-        break;
       }
     }
     return valid;
@@ -65,7 +64,13 @@ function useForm<T>({
     return keys;
   };
   const setFormData = function (mData: any) {
-    setData(mData);
+    const keys = Object.keys(current);
+
+    keys.forEach((key) => {
+      newData[key] = mData[key];
+      set(key, mData[key]);
+      setData(mData);
+    });
   };
   const setCheckValid = (name: string, checkFn: Function) => {
     elementsChecks[name] = checkFn;
@@ -97,6 +102,7 @@ function useForm<T>({
   };
 
   const set = (name: string, value: any) => {
+    console.log(controllers.has(name));
     if (controllers.has(name)) {
       const [_v, setV] = controllers.get(name);
       setData({
@@ -121,6 +127,7 @@ function useForm<T>({
     setClearValid,
     clearValidates,
     checkField,
+    current,
   };
   const ret = new Proxy(newData, {
     get(target, prop: string) {
@@ -133,7 +140,7 @@ function useForm<T>({
     set(target, prop: string, value) {
       target[prop] = value;
       set(prop, value);
-
+      console.log('object');
       let check = elementsChecks[prop];
 
       check && check(value);

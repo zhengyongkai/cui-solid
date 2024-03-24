@@ -1,6 +1,6 @@
 export default `const form1 = useForm({
     data: {
-        u: '',
+        u: 'fsdf',
         p: ''
     },
     validation: {
@@ -16,4 +16,4 @@ export default `const form1 = useForm({
     <FormItem name='p' label="密码：">
         <Input type='password'/>
     </FormItem>
-</Form>`
+</Form>`;
